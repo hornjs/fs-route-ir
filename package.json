@@ -1,0 +1,51 @@
+{
+  "name": "fs-route-ir",
+  "version": "0.0.0",
+  "description": "A route IR generator and path matcher that parses file paths into a route tree.",
+  "homepage": "",
+  "license": "MIT",
+  "author": "Maofeng <hornjs@qq.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hornjs/fs-route-ir.git"
+  },
+  "files": [
+    "dist",
+    "package.json",
+    "README.md",
+    "README.zh-CN.md",
+    "LICENSE"
+  ],
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public",
+    "directory": "dist"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "lint": "oxlint . && oxfmt --check .",
+    "fmt": "oxlint --fix . && oxfmt .",
+    "prepare:publish": "prepare-publish --print-tree",
+    "prepare:publish:dry-run": "prepare-publish --dry-run",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "release": "bumpp",
+    "prepublishOnly": "pnpm run build && pnpm run prepare:publish"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "@typescript/native-preview": "7.0.0-dev.20260316.1",
+    "bumpp": "^11.0.1",
+    "oxfmt": "^0.37.0",
+    "oxlint": "^1.52.0",
+    "prepare-publish": "^0.0.2",
+    "tsdown": "^0.21.3",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0"
+  }
+}
