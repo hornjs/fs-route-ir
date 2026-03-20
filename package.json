@@ -1,6 +1,6 @@
 {
   "name": "fs-route-ir",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A route IR generator and path matcher that parses file paths into a route tree.",
   "homepage": "",
   "license": "MIT",
