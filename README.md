@@ -45,13 +45,15 @@ Not supported:
 ## API
 
 ```ts
-import { build, createMatcher, parsePath, walkTree } from "fs-route-ir";
+import { build, parsePath, walkTree } from "fs-route-ir";
+import { createMatcher } from "fs-route-ir/matcher";
 ```
 
 ## Quick Start
 
 ```ts
-import { build, createMatcher } from "fs-route-ir";
+import { build } from "fs-route-ir";
+import { createMatcher } from "fs-route-ir/matcher";
 
 const result = build(
   [
@@ -170,6 +172,8 @@ const result = build(
 Matches only by path:
 
 ```ts
+import { createMatcher } from "fs-route-ir/matcher";
+
 const matchPath = createMatcher(result);
 const match = matchPath("/blog/hello");
 ```
@@ -184,6 +188,8 @@ The match result includes:
 HTTP method filtering, dispatch order, and runtime behavior are left to the caller.
 
 ```ts
+import { createMatcher } from "fs-route-ir/matcher";
+
 const matchPath = createMatcher(result);
 const match = matchPath("/blog/hello");
 

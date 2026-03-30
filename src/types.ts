@@ -117,28 +117,6 @@ export interface BuildResult<TMeta = unknown, TEntryKind extends string = string
   dirFiles: Map<string, string[]>;
 }
 
-export interface MatchedEntry<TMeta = unknown, TEntryKind extends string = string> {
-  /** Node that contributed this entry to the match. */
-  node: RouteNode<TMeta, TEntryKind>;
-  /** Entry attached to that node. */
-  entry: RouteEntry<TEntryKind>;
-}
-
-export interface PathMatch<TMeta = unknown, TEntryKind extends string = string> {
-  /** Decoded path params collected during matching. Catchall params are slash-joined. */
-  params: Record<string, string>;
-  /** Full ancestry from root to the matched leaf. */
-  nodes: RouteNode<TMeta, TEntryKind>[];
-  /** The routable node selected by the matcher. */
-  leaf: RouteNode<TMeta, TEntryKind>;
-  /** Flattened entries contributed by every node in the matched branch. */
-  entries: MatchedEntry<TMeta, TEntryKind>[];
-}
-
-export type RouteMatcher<TMeta = unknown, TEntryKind extends string = string> = (
-  path: string,
-) => PathMatch<TMeta, TEntryKind> | null;
-
 export interface EntryDefinition<TEntryKind extends string = string> {
   /** Caller-defined role assigned to the file. */
   kind: TEntryKind;

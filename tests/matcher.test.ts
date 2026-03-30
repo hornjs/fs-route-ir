@@ -1,7 +1,12 @@
-import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
+
+import { describe, expect, expectTypeOf, it } from "vitest";
 
 import { build } from "../src/build.ts";
+import type { RouteEntry, RouteNode } from "../src/types.ts";
+import * as matcher from "../src/matcher.ts";
 import { createMatcher } from "../src/matcher.ts";
+import type { MatchedEntry, PathMatch, RouteMatcher } from "../src/matcher.ts";
 
 function defineEntry({ baseName }: { baseName: string }) {
   if (baseName === "layout" || baseName === "page") {
@@ -10,6 +15,37 @@ function defineEntry({ baseName }: { baseName: string }) {
 
   return null;
 }
+
+describe("matcher entry", () => {
+  it("exports the matcher API from the dedicated entry", () => {
+    expect(matcher).toMatchObject({
+      createMatcher: expect.any(Function),
+    });
+  });
+
+  it("exports matcher-related types from the dedicated entry", () => {
+    expectTypeOf<MatchedEntry<{ secure: boolean }, "page">>().toEqualTypeOf<{
+      node: RouteNode<{ secure: boolean }, "page">;
+      entry: RouteEntry<"page">;
+    }>();
+    expectTypeOf<PathMatch<{ secure: boolean }, "page">["entries"]>().toEqualTypeOf<
+      Array<MatchedEntry<{ secure: boolean }, "page">>
+    >();
+    expectTypeOf<RouteMatcher<{ secure: boolean }, "page">>().toEqualTypeOf<
+      (path: string) => PathMatch<{ secure: boolean }, "page"> | null
+    >();
+  });
+
+  it("declares the matcher subpath export", () => {
+    const packageJson = JSON.parse(
+      readFileSync(new URL("../package.json", import.meta.url), "utf8"),
+    ) as {
+      exports?: Record<string, string>;
+    };
+
+    expect(packageJson.exports?.["./matcher"]).toBe("./src/matcher.ts");
+  });
+});
 
 describe("createMatcher", () => {
   it("prefers static routes over dynamic routes", () => {

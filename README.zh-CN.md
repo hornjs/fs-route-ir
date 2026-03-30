@@ -45,13 +45,15 @@
 ## API
 
 ```ts
-import { build, createMatcher, parsePath, walkTree } from "fs-route-ir";
+import { build, parsePath, walkTree } from "fs-route-ir";
+import { createMatcher } from "fs-route-ir/matcher";
 ```
 
 ## 快速开始
 
 ```ts
-import { build, createMatcher } from "fs-route-ir";
+import { build } from "fs-route-ir";
+import { createMatcher } from "fs-route-ir/matcher";
 
 const result = build(
   [
@@ -170,6 +172,8 @@ const result = build(
 只做路径匹配：
 
 ```ts
+import { createMatcher } from "fs-route-ir/matcher";
+
 const matchPath = createMatcher(result);
 const match = matchPath("/blog/hello");
 ```
@@ -184,6 +188,8 @@ const match = matchPath("/blog/hello");
 请求方法筛选、entry 调度和执行顺序由调用方自己决定。
 
 ```ts
+import { createMatcher } from "fs-route-ir/matcher";
+
 const matchPath = createMatcher(result);
 const match = matchPath("/blog/hello");
 
